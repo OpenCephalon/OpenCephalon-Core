@@ -1,0 +1,28 @@
+{##
+#  @license 3-clause BSD
+#  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
+##}
+
+
+{% extends 'OpenCephalonBundle::base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block main %}
+
+
+
+	<ol class="breadcrumb">
+		<li class="active">Project {{  project.title }}</li>
+		<li class="active">Out Stream {{  outStream.title }}</li>
+	</ol>
+
+
+	<h1>Project {{ project.title }} Out Stream {{ outStream.title }}</h1>
+
+
+	<ul class="list-group">
+		<li class="list-group-item"><a href="{{  path('opencephalon_project_outstream_item_list', { 'projectId':project.publicId, 'outStreamId': outStream.publicId }) }}" class="btn btn-default">Items</a></li>
+	</ul>
+
+{%  endblock %}

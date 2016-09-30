@@ -1,0 +1,33 @@
+{##
+#  @license 3-clause BSD
+#  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
+##}
+
+
+{% extends 'OpenCephalonBundle::base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block main %}
+
+
+	<ol class="breadcrumb">
+		<li class="active">New Project</li>
+	</ol>
+
+
+	<section class="">
+
+		<form class="styled" action="" method="post" {{ form_enctype(form) }}>
+			{{ form_errors(form) }}
+
+			{{ form_rest(form) }}
+
+			<input type="submit" value="Create New Project" />
+
+		</form>
+
+	</section>
+
+
+{%  endblock %}

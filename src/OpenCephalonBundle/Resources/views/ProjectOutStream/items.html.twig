@@ -1,0 +1,50 @@
+{##
+#  @license 3-clause BSD
+#  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
+##}
+
+
+{% extends 'OpenCephalonBundle::base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block main %}
+
+
+	<ol class="breadcrumb">
+		<li class="active">Project {{  project.title }}</li>
+		<li class="active">Out Stream {{  outStream.title }}</li>
+	</ol>
+
+
+	<h1>Project {{ project.title }} Out Stream {{ outStream.title }} Items</h1>
+
+	{%  if  items %}
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>Title</th>
+				<th>Description</th>
+				<th>URL</th>
+				<th>&nbsp;</th>
+			</tr>
+			</thead>
+			<tbody>
+			{%  for item in items %}
+				<tr>
+					<td>{{  item.title }}</td>
+					<td>{{  item.description }}</td>
+					<td>{{  item.url }}</td>
+					<td>
+
+					</td>
+				</tr>
+			{%  endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>You have no items </p>
+	{% endif %}
+
+{%  endblock %}
+

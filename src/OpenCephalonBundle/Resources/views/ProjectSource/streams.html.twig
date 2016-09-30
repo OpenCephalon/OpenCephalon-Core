@@ -1,0 +1,50 @@
+{##
+#  @license 3-clause BSD
+#  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
+##}
+
+
+{% extends 'OpenCephalonBundle::base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block main %}
+
+
+
+	<ol class="breadcrumb">
+		<li class="active">Project {{  project.title }}</li>
+		<li class="active">Source {{  source.title }}</li>
+	</ol>
+
+
+	<h1>Project {{ project.title }} Source {{ source.title }} Streams</h1>
+
+
+
+	{%  if  streams %}
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>Stream</th>
+				<th>&nbsp;</th>
+			</tr>
+			</thead>
+			<tbody>
+			{%  for stream in streams %}
+				<tr>
+					<td>
+						{{  stream.url }}
+					</td>
+					<td>
+						<a href="{{  path('opencephalon_project_source_stream', { 'projectId':project.publicId, 'sourceId':source.publicId, 'streamId':stream.publicId }) }}" class="btn btn-default">View</a>
+					</td>
+				</tr>
+			{%  endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>You have no streams</p>
+	{% endif %}
+
+{%  endblock %}

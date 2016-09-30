@@ -1,0 +1,68 @@
+{##
+#  @license 3-clause BSD
+#  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
+##}
+
+
+{% extends 'OpenCephalonBundle::base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block main %}
+
+
+
+	<ol class="breadcrumb">
+		<li class="active">Project {{  project.title }}</li>
+		<li class="active">Source {{  source.title }}</li>
+		<li class="active">Stream {{  sourceStream.url }}</li>
+	</ol>
+
+
+	<h1>Project {{ project.title }} Source {{ source.title }} Stream {{ sourceStream.url }}</h1>
+
+	{%  if  outstreams %}
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>Stream</th>
+				<th>Linked?</th>
+				<th>&nbsp;</th>
+			</tr>
+			</thead>
+			<tbody>
+			{%  for outstream in outstreams %}
+				<tr>
+					<td>
+						{{  outstream.outstream.title }}
+					</td>
+					<td>
+						{%  if outstream.sourceStreamToOutStream %}
+							YES
+						{%  else %}
+						{%  endif %}
+					</td>
+					<td>
+						{%  if outstream.sourceStreamToOutStream %}
+							<form  action="#" method="post">
+								<input type="hidden" name="action" value="remove">
+								<input type="hidden" name="outStream" value="{{ outstream.outstream.publicId }}">
+								<input type="submit" value="Remove">
+							</form>
+						{%  else %}
+							<form  action="#" method="post">
+								<input type="hidden" name="action" value="add">
+								<input type="hidden" name="outStream" value="{{ outstream.outstream.publicId }}">
+								<input type="submit" value="Add">
+							</form>
+						{%  endif %}
+					</td>
+				</tr>
+			{%  endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>You have no streams</p>
+	{% endif %}
+
+{%  endblock %}

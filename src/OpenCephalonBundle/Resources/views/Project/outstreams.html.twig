@@ -1,0 +1,46 @@
+{##
+#  @license 3-clause BSD
+#  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
+##}
+
+
+{% extends 'OpenCephalonBundle::base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block main %}
+
+	<ol class="breadcrumb">
+		<li class="active">Project {{  project.title }}</li>
+	</ol>
+
+
+	<h1>Project {{ project.title }} OutStreams</h1>
+
+	{%  if  outstreams %}
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>Title</th>
+				<th>&nbsp;</th>
+			</tr>
+			</thead>
+			<tbody>
+			{%  for outstream in outstreams %}
+				<tr>
+					<td>
+						{{  outstream.title }}
+					</td>
+					<td>
+						<a href="{{  path('opencephalon_project_outstream', {'projectId':project.publicId, 'outStreamId':outstream.publicId}) }}" class="btn btn-default">View</a>
+					</td>
+				</tr>
+			{%  endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>You have no outstreams in Project {{  project.title }}</p>
+	{% endif %}
+
+{%  endblock %}
+

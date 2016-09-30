@@ -1,0 +1,69 @@
+opencephalon_homepage:
+    path:     /
+    defaults: { _controller: OpenCephalonBundle:Default:index }
+
+
+opencephalon_new_project:
+    path:     /newproject
+    defaults: { _controller: OpenCephalonBundle:ProjectNew:index }
+
+
+opencephalon_project:
+    path:     /project/{projectId}
+    defaults: { _controller: OpenCephalonBundle:Project:index }
+
+
+opencephalon_project_new_source:
+    path:     /project/{projectId}/new/source
+    defaults: { _controller: OpenCephalonBundle:Project:newSource }
+
+
+
+opencephalon_project_new_out_stream:
+    path:     /project/{projectId}/new/outstream
+    defaults: { _controller: OpenCephalonBundle:Project:newOutStream }
+
+
+opencephalon_project_source_list:
+    path:     /project/{projectId}/source
+    defaults: { _controller: OpenCephalonBundle:Project:sources }
+
+
+opencephalon_project_source:
+    path:     /project/{projectId}/source/{sourceId}
+    defaults: { _controller: OpenCephalonBundle:ProjectSource:index }
+
+
+opencephalon_project_source_stream_list:
+    path:     /project/{projectId}/source/{sourceId}/stream
+    defaults: { _controller: OpenCephalonBundle:ProjectSource:streams }
+
+opencephalon_project_source_stream:
+    path:     /project/{projectId}/source/{sourceId}/stream/{streamId}
+    defaults: { _controller: OpenCephalonBundle:ProjectSourceStream:index }
+
+
+opencephalon_project_source_stream_outstreams_list:
+    path:     /project/{projectId}/source/{sourceId}/stream/{streamId}/outstreams
+    defaults: { _controller: OpenCephalonBundle:ProjectSourceStream:outstreams }
+
+
+opencephalon_project_outstream_list:
+    path:     /project/{projectId}/outstream
+    defaults: { _controller: OpenCephalonBundle:Project:outstreams }
+
+
+opencephalon_project_outstream:
+    path:     /project/{projectId}/outstream/{outStreamId}
+    defaults: { _controller: OpenCephalonBundle:ProjectOutStream:index }
+
+
+opencephalon_project_outstream_item_list:
+    path:     /project/{projectId}/outstream/{outStreamId}/item
+    defaults: { _controller: OpenCephalonBundle:ProjectOutStream:items }
+
+
+opencephalon_api1_project_outstream_item_list_json:
+    path:     /api1/project/{projectId}/outstream/{outStreamId}/items.json
+    defaults: { _controller: OpenCephalonBundle:API1ProjectOutStream:itemsJSON }
+
