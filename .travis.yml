@@ -9,8 +9,8 @@ services: PostgreSQL
 
 before_script:
   - psql -c 'create database test;' -U postgres
-  - cp  .travis.parameters_test.mysql.yml  app/config/parameters.yml
-  - cp  .travis.parameters_test.mysql.yml  app/config/parameters_test.yml
+  - cp  .travis.parameters_test.pgsql.yml  app/config/parameters.yml
+  - cp  .travis.parameters_test.pgsql.yml  app/config/parameters_test.yml
   - composer install --dev --no-interaction
 
 script: phpunit  --configuration app/phpunit.xml.dist
