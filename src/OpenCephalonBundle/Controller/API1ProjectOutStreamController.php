@@ -63,7 +63,7 @@ class API1ProjectOutStreamController extends Controller
                 'source'=>array(
                     'title'=>$item->getSourceStream()->getSource()->getTitle(),
                 ),
-
+                'published_at'=>$item->getPublishedAt()->format('r'),
             );
         }
 
