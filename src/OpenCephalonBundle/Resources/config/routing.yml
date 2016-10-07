@@ -8,6 +8,12 @@ opencephalon_new_project:
     defaults: { _controller: OpenCephalonBundle:ProjectNew:index }
 
 
+opencephalon_project_list:
+    path:     /project
+    defaults: { _controller: OpenCephalonBundle:Default:projects }
+
+
+
 opencephalon_project:
     path:     /project/{projectId}
     defaults: { _controller: OpenCephalonBundle:Project:index }

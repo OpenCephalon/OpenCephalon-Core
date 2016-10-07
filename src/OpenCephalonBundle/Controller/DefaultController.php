@@ -15,4 +15,17 @@ class DefaultController extends Controller
     {
         return $this->render('OpenCephalonBundle:Default:index.html.twig');
     }
+
+    public function projectsAction()
+    {
+
+        $doctrine = $this->getDoctrine()->getManager();
+        $repo = $doctrine->getRepository('OpenCephalonBundle:Project');
+        $projects = $repo->findAll();
+
+        return $this->render('OpenCephalonBundle:Default:projects.html.twig', array(
+            'projects' => $projects,
+        ));
+    }
+
 }

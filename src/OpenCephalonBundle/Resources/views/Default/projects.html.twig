@@ -1,0 +1,46 @@
+{##
+#  @license 3-clause BSD
+#  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
+##}
+
+
+{% extends 'OpenCephalonBundle::base.html.twig' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block main %}
+
+	<ol class="breadcrumb">
+		<li class="active">Projects</li>
+	</ol>
+
+
+	<h1>Projects</h1>
+
+	{%  if  projects %}
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>Project</th>
+				<th>&nbsp;</th>
+			</tr>
+			</thead>
+			<tbody>
+			{%  for project in projects %}
+				<tr>
+					<td>
+						{{  project.title }}
+					</td>
+					<td>
+						<a href="{{  path('opencephalon_project', { 'projectId':project.publicId }) }}" class="btn btn-default">View</a>
+					</td>
+				</tr>
+			{%  endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>You have no projects</p>
+	{% endif %}
+
+{%  endblock %}
+
