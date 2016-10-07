@@ -15,13 +15,13 @@ opencephalon_project:
 
 opencephalon_project_new_source:
     path:     /project/{projectId}/new/source
-    defaults: { _controller: OpenCephalonBundle:Project:newSource }
+    defaults: { _controller: OpenCephalonBundle:ProjectEdit:newSource }
 
 
 
 opencephalon_project_new_out_stream:
     path:     /project/{projectId}/new/outstream
-    defaults: { _controller: OpenCephalonBundle:Project:newOutStream }
+    defaults: { _controller: OpenCephalonBundle:ProjectEdit:newOutStream }
 
 
 opencephalon_project_source_list:
