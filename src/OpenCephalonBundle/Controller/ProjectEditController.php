@@ -48,7 +48,12 @@ class ProjectEditController extends ProjectController
                 $doctrine->persist($source);
                 $doctrine->persist($sourceStream);
                 $doctrine->flush();
-                return $this->redirect($this->generateUrl('opencephalon_project', array('projectId'=>$this->project->getPublicId())));
+
+                return $this->redirect($this->generateUrl('opencephalon_project_source_stream', array(
+                    'projectId'=>$this->project->getPublicId(),
+                    'sourceId'=>$source->getPublicId(),
+                    'streamId'=>$sourceStream->getPublicId(),
+                )));
             }
         }
 
@@ -78,7 +83,10 @@ class ProjectEditController extends ProjectController
 
                 $doctrine->persist($outStream);
                 $doctrine->flush();
-                return $this->redirect($this->generateUrl('opencephalon_project', array('projectId'=>$this->project->getPublicId())));
+                return $this->redirect($this->generateUrl('opencephalon_project_outstream', array(
+                    'projectId'=>$this->project->getPublicId(),
+                    'outStreamId'=>$outStream->getPublicId(),
+                )));
             }
         }
 
