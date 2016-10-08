@@ -2,6 +2,10 @@ opencephalon_homepage:
     path:     /
     defaults: { _controller: OpenCephalonBundle:Default:index }
 
+opencephalon_current_user:
+    path:     /me
+    defaults: { _controller: OpenCephalonBundle:Default:currentUser }
+
 
 opencephalon_new_project:
     path:     /newproject

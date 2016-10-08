@@ -16,6 +16,11 @@ class DefaultController extends Controller
         return $this->render('OpenCephalonBundle:Default:index.html.twig');
     }
 
+    public function currentUserAction()
+    {
+        return $this->render('OpenCephalonBundle:Default:currentUser.html.twig');
+    }
+
     public function projectsAction()
     {
 
