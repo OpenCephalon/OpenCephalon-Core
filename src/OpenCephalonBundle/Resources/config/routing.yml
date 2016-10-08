@@ -77,3 +77,7 @@ opencephalon_api1_project_outstream_item_list_json:
     path:     /api1/project/{projectId}/outstream/{outStreamId}/items.json
     defaults: { _controller: OpenCephalonBundle:API1ProjectOutStream:itemsJSON }
 
+
+opencephalon_project_item:
+    path:     /project/{projectId}/item/{itemId}
+    defaults: { _controller: OpenCephalonBundle:ProjectItem:index }

@@ -36,7 +36,7 @@
 					<td>{{  item.description }}</td>
 					<td>{{  item.url }}</td>
 					<td>
-
+						<a href="{{  path('opencephalon_project_item', { 'projectId':project.publicId, 'itemId':item.publicId }) }}" class="btn btn-default">View</a>
 					</td>
 				</tr>
 			{%  endfor %}
