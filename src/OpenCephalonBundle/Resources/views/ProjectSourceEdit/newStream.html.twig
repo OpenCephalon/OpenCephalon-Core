@@ -1,0 +1,35 @@
+{##
+#  @license 3-clause BSD
+#  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
+##}
+
+
+{% extends 'OpenCephalonBundle::base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block main %}
+
+
+
+	<ol class="breadcrumb">
+		<li class="active">Project {{  project.title }}</li>
+		<li class="active">Source {{  source.title }}</li>
+	</ol>
+
+
+	<h1>Project {{ project.title }} Source {{ source.title }} New Stream</h1>
+
+
+	<form class="styled" action="" method="post" {{ form_enctype(form) }}>
+		{{ form_errors(form) }}
+
+		{{ form_rest(form) }}
+
+		<input type="submit" value="Create New Stream" />
+
+	</form>
+
+
+{%  endblock %}
+

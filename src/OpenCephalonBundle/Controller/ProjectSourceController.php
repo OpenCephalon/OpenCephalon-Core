@@ -19,8 +19,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ProjectSourceController extends Controller
 {
 
+    /** @var  Project */
     protected $project;
 
+    /** @var  Source */
     protected $source;
 
     protected function build($projectId, $sourceId) {
