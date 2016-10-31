@@ -47,13 +47,13 @@
 							<form  action="#" method="post">
 								<input type="hidden" name="action" value="remove">
 								<input type="hidden" name="outStream" value="{{ outstream.outstream.publicId }}">
-								<input type="submit" value="Remove">
+								<input type="submit" value="Remove" class="btn btn-warning">
 							</form>
 						{%  else %}
 							<form  action="#" method="post">
 								<input type="hidden" name="action" value="add">
 								<input type="hidden" name="outStream" value="{{ outstream.outstream.publicId }}">
-								<input type="submit" value="Add">
+								<input type="submit" value="Add" class="btn btn-warning">
 							</form>
 						{%  endif %}
 					</td>
