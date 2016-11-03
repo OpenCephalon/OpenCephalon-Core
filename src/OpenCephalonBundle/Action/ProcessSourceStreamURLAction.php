@@ -4,6 +4,7 @@
 namespace OpenCephalonBundle\Action;
 
 use OpenCephalonBundle\Entity\Item;
+use OpenCephalonBundle\Entity\ItemFromSourceStream;
 use OpenCephalonBundle\Entity\ItemIdRSS;
 use OpenCephalonBundle\Entity\SourceStream;
 use OpenCephalonBundle\Model\BaseItem;
@@ -27,14 +28,14 @@ class ProcessSourceStreamURLAction
     /** @var \GuzzleHttp\Client  */
     protected $guzzleClient;
 
-    /** @var AddNewItemToStreamsAction */
-    protected $addNewItemToStreamsAction;
+    /** @var AddItemToStreamsAction */
+    protected $addItemToStreamsAction;
 
     function __construct($container)
     {
         $this->container = $container;
         $this->guzzleClient = new \GuzzleHttp\Client();
-        $this->addNewItemToStreamsAction = new AddNewItemToStreamsAction($container);
+        $this->addItemToStreamsAction = new AddItemToStreamsAction($container);
     }
 
     function go(SourceStream $sourceStream) {
@@ -82,7 +83,7 @@ class ProcessSourceStreamURLAction
         // Now Save or Update.
         if ($item == null) {
             $item = new Item();
-            $item->setSourceStream($sourceStream);
+            $item->setProject($sourceStream->getSource()->getProject());
             $item->setFromModel($modelItem);
 
             // If new Item, Create ID for it!
@@ -100,12 +101,22 @@ class ProcessSourceStreamURLAction
             $doctrine->persist($itemId);
             $doctrine->flush(array($item, $itemId));
 
-            $this->addNewItemToStreamsAction->go($item);
+            $itemFromSourceStream = new ItemFromSourceStream();
+            $itemFromSourceStream->setSourceStream($sourceStream);
+            $itemFromSourceStream->setItem($item);
+            $doctrine->persist($itemFromSourceStream);
+            $doctrine->flush($itemFromSourceStream);
+
         } else {
             $item->setFromModel($modelItem);
             $doctrine->persist($item);
             $doctrine->flush($item);
+
+            // TODO is there a $itemFromSourceStream record for this item and sourcestream?
+            // If not, add it!
         }
+
+        $this->addItemToStreamsAction->go($sourceStream, $item);
 
     }
 

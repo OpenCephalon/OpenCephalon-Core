@@ -14,9 +14,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class OutStreamHasItem
 {
-
     /**
      * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
      * @ORM\ManyToOne(targetEntity="OpenCephalonBundle\Entity\OutStream")
      * @ORM\JoinColumn(name="out_stream_id", referencedColumnName="id", nullable=false)
      */
@@ -24,36 +29,119 @@ class OutStreamHasItem
 
 
     /**
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="OpenCephalonBundle\Entity\Item")
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id", nullable=false)
      */
     private $item;
 
-
+    /**
+     * @var datetime $createdAt
+     *
+     * @ORM\Column(name="added_at", type="datetime", nullable=false)
+     */
+    private $addedAt;
 
     /**
      * @var datetime $createdAt
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @ORM\Column(name="removed_at", type="datetime", nullable=true)
      */
-    private $createdAt;
+    private $removedAt;
 
     /**
-     * @param \OpenCephalonBundle\Entity\datetime $createdAt
+     * @ORM\ManyToOne(targetEntity="OpenCephalonBundle\Entity\User")
+     * @ORM\JoinColumn(name="added_by_user_id", referencedColumnName="id", nullable=true)
      */
-    public function setCreatedAt($createdAt)
+    private $addedByUser;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="OpenCephalonBundle\Entity\User")
+     * @ORM\JoinColumn(name="removed_by_user_id", referencedColumnName="id", nullable=true)
+     */
+    private $removedByUser;
+
+    /**
+     * @param mixed $addedAt
+     */
+    public function setAddedAt($addedAt)
     {
-        $this->createdAt = $createdAt;
+        $this->addedAt = $addedAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddedAt()
+    {
+        return $this->addedAt;
+    }
+
+    /**
+     * @param mixed $addedByUser
+     */
+    public function setAddedByUser($addedByUser)
+    {
+        $this->addedByUser = $addedByUser;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddedByUser()
+    {
+        return $this->addedByUser;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param \OpenCephalonBundle\Entity\datetime $removedAt
+     */
+    public function setRemovedAt($removedAt)
+    {
+        $this->removedAt = $removedAt;
     }
 
     /**
      * @return \OpenCephalonBundle\Entity\datetime
      */
-    public function getCreatedAt()
+    public function getRemovedAt()
     {
-        return $this->createdAt;
+        return $this->removedAt;
     }
+
+    /**
+     * @param mixed $removedByUser
+     */
+    public function setRemovedByUser($removedByUser)
+    {
+        $this->removedByUser = $removedByUser;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRemovedByUser()
+    {
+        return $this->removedByUser;
+    }
+
+
+
 
     /**
      * @param mixed $item
@@ -92,7 +180,7 @@ class OutStreamHasItem
      * @ORM\PrePersist()
      */
     public function beforeFirstSave() {
-        $this->createdAt = new \DateTime("", new \DateTimeZone("UTC"));
+        $this->addedAt = new \DateTime("", new \DateTimeZone("UTC"));
     }
 
 

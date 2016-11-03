@@ -37,14 +37,6 @@ class Item
      */
     private $project;
 
-
-    /**
-     * @ORM\ManyToOne(targetEntity="OpenCephalonBundle\Entity\SourceStream")
-     * @ORM\JoinColumn(name="source_stream_id", referencedColumnName="id", nullable=false)
-     */
-    private $sourceStream;
-
-
     /**
      * @var string
      *
@@ -175,23 +167,6 @@ class Item
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * @param SourceStream $sourceStream
-     */
-    public function setSourceStream(SourceStream $sourceStream)
-    {
-        $this->sourceStream = $sourceStream;
-        $this->project = $sourceStream->getSource()->getProject();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSourceStream()
-    {
-        return $this->sourceStream;
     }
 
     /**
