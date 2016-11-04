@@ -1,0 +1,49 @@
+{##
+#  @license 3-clause BSD
+#  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
+##}
+
+
+{% extends 'OpenCephalonBundle::base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block main %}
+
+
+
+	<ol class="breadcrumb">
+		<li class="active">Project {{  project.title }}</li>
+		<li class="active">Source {{  source.title }}</li>
+		<li class="active">Stream {{  sourceStream.url }}</li>
+		<li class="active">To Out Stream {{  outStream.title }}</li>
+	</ol>
+
+
+	<h1>Project {{ project.title }} Source {{ source.title }} Stream {{ sourceStream.url }} To Out Stream {{  outStream.title }}</h1>
+
+	{%  if  conditions %}
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>Contains</th>
+			</tr>
+			</thead>
+			<tbody>
+			{%  for condition in conditions %}
+				<tr>
+					<td>
+						{{  condition.contains }}
+					</td>
+					<td>
+						&nbsp;
+					</td>
+				</tr>
+			{%  endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>You have no conditions</p>
+	{% endif %}
+
+{%  endblock %}

@@ -217,7 +217,9 @@ class Item
         return $this->publishedAt;
     }
 
-
+    public function getSearchText() {
+        return $this->title . " ". $this->description;
+    }
 
     /**
      * @ORM\PrePersist()

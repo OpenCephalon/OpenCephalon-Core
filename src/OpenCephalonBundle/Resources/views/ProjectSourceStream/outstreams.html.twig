@@ -28,6 +28,7 @@
 				<th>Stream</th>
 				<th>Linked?</th>
 				<th>&nbsp;</th>
+				<th>&nbsp;</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -41,6 +42,9 @@
 							YES
 						{%  else %}
 						{%  endif %}
+					</td>
+					<td>
+						<a href="{{  url('opencephalon_project_source_stream_outstreams_conditions_list', {'projectId':project.publicId, 'sourceId': source.publicId, 'streamId':sourceStream.publicId, 'outStreamId':outstream.outstream.publicId}) }}" class="btn btn-default">Conditions</a>
 					</td>
 					<td>
 						{%  if outstream.sourceStreamToOutStream %}

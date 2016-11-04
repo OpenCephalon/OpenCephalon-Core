@@ -9,6 +9,7 @@ use OpenCephalonBundle\Entity\Project;
 use OpenCephalonBundle\Entity\Source;
 use OpenCephalonBundle\Entity\SourceStream;
 use OpenCephalonBundle\Entity\SourceStreamToOutStream;
+use OpenCephalonBundle\Entity\SourceStreamToOutStreamCondition;
 use OpenCephalonBundle\Entity\User;
 use OpenCephalonBundle\Tests\BaseTestWithDataBase;
 
@@ -240,6 +241,147 @@ class AddItemToStreamsActionTest extends BaseTestWithDataBase {
 
         $this->assertFalse($itemRepo->isItemInOutStream($item, $outStream));
     }
+
+
+
+    function testConditionMatches1() {
+
+        $user = new User();
+        $user->setUsername('test1');
+        $user->setEmail('test1@example.org');
+        $user->setPassword('1234');
+        $this->em->persist($user);
+
+        $project = new Project();
+        $project->setTitle('Test');
+        $project->setPublicId('test');
+        $project->setOwner($user);
+        $this->em->persist($project);
+
+        $this->em->flush();
+
+        $source = new Source();
+        $source->setProject($project);
+        $source->setTitle('Test');
+        $this->em->persist($source);
+
+        $sourceStream = new SourceStream();
+        $sourceStream->setSource($source);
+        $sourceStream->setUrl('http://example.com/');
+        $this->em->persist($sourceStream);
+
+        $outStream = new OutStream();
+        $outStream->setProject($project);
+        $outStream->setPublicId('out');
+        $outStream->setTitle('Out');
+        $this->em->persist($outStream);
+
+        $this->em->flush();
+
+        $sourceStreamToOutStream = new SourceStreamToOutStream();
+        $sourceStreamToOutStream->setSourceStream($sourceStream);
+        $sourceStreamToOutStream->setOutStream($outStream);
+        $this->em->persist($sourceStreamToOutStream);
+
+        $sourceStreamToOutStreamCondition = new SourceStreamToOutStreamCondition();
+        $sourceStreamToOutStreamCondition->setPublicId('test');
+        $sourceStreamToOutStreamCondition->setSourceStream($sourceStream);
+        $sourceStreamToOutStreamCondition->setOutStream($outStream);
+        $sourceStreamToOutStreamCondition->setContains('cat');
+        $this->em->persist($sourceStreamToOutStreamCondition);
+
+        $item = new Item();
+        $item->setTitle('the cat sat on the mat');
+        $item->setProject($project);
+        $item->setPublishedAt(new \DateTime());
+        $this->em->persist($item);
+
+        $this->em->flush();
+
+        // TEST
+
+        $action = new AddItemToStreamsAction($this->container);
+        $action->go($sourceStream, $item);
+
+        $repo = $this->em->getRepository('OpenCephalonBundle:OutStreamHasItem');
+        $links = $repo->findAll();
+
+        $this->assertEquals(1, count($links));
+
+        $link = $links[0];
+
+        $this->assertEquals($outStream->getId(), $link->getOutStream()->getId());
+        $this->assertEquals($item->getId(), $link->getItem()->getId());
+
+    }
+
+
+    function testConditionDoesNotMatch1() {
+
+        $user = new User();
+        $user->setUsername('test1');
+        $user->setEmail('test1@example.org');
+        $user->setPassword('1234');
+        $this->em->persist($user);
+
+        $project = new Project();
+        $project->setTitle('Test');
+        $project->setPublicId('test');
+        $project->setOwner($user);
+        $this->em->persist($project);
+
+        $this->em->flush();
+
+        $source = new Source();
+        $source->setProject($project);
+        $source->setTitle('Test');
+        $this->em->persist($source);
+
+        $sourceStream = new SourceStream();
+        $sourceStream->setSource($source);
+        $sourceStream->setUrl('http://example.com/');
+        $this->em->persist($sourceStream);
+
+        $outStream = new OutStream();
+        $outStream->setProject($project);
+        $outStream->setPublicId('out');
+        $outStream->setTitle('Out');
+        $this->em->persist($outStream);
+
+        $this->em->flush();
+
+        $sourceStreamToOutStream = new SourceStreamToOutStream();
+        $sourceStreamToOutStream->setSourceStream($sourceStream);
+        $sourceStreamToOutStream->setOutStream($outStream);
+        $this->em->persist($sourceStreamToOutStream);
+
+        $sourceStreamToOutStreamCondition = new SourceStreamToOutStreamCondition();
+        $sourceStreamToOutStreamCondition->setPublicId('test');
+        $sourceStreamToOutStreamCondition->setSourceStream($sourceStream);
+        $sourceStreamToOutStreamCondition->setOutStream($outStream);
+        $sourceStreamToOutStreamCondition->setContains('lizard');
+        $this->em->persist($sourceStreamToOutStreamCondition);
+
+        $item = new Item();
+        $item->setTitle('the cat sat on the mat');
+        $item->setProject($project);
+        $item->setPublishedAt(new \DateTime());
+        $this->em->persist($item);
+
+        $this->em->flush();
+
+        // TEST
+
+        $action = new AddItemToStreamsAction($this->container);
+        $action->go($sourceStream, $item);
+
+        $repo = $this->em->getRepository('OpenCephalonBundle:OutStreamHasItem');
+        $links = $repo->findAll();
+
+        $this->assertEquals(0, count($links));
+
+    }
+
 
 
 }
