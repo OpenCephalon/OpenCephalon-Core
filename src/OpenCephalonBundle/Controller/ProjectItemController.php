@@ -49,9 +49,14 @@ class ProjectItemController extends Controller
         $this->build($projectId, $itemId);
         //data
 
+
+        $doctrine = $this->getDoctrine()->getManager();
+        $sourceStreams = $doctrine->getRepository('OpenCephalonBundle:SourceStream')->findByItem($this->item);
+
         return $this->render('OpenCephalonBundle:ProjectItem:index.html.twig', array(
             'project'=>$this->project,
             'item' => $this->item,
+            'sourceStreams' => $sourceStreams,
         ));
     }
 

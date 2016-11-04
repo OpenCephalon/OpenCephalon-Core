@@ -5,6 +5,7 @@ namespace OpenCephalonBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use OpenCephalonBundle\Entity\Item;
 use OpenCephalonBundle\Entity\Source;
 
 
@@ -46,5 +47,17 @@ class SourceStreamRepository extends EntityRepository
             ->getResult();
     }
 
+    public function findByItem(Item $item) {
+
+        return $this->getEntityManager()
+                   ->createQuery(
+                       ' SELECT ss FROM OpenCephalonBundle:SourceStream ss'.
+                       ' JOIN ss.itemFromSourceStreams  ifss'.
+                       ' WHERE ifss.item = :item'
+                   )
+                   ->setParameter('item', $item)
+                   ->getResult();
+
+    }
 
 }

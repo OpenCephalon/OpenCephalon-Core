@@ -50,6 +50,14 @@ class SourceStream
      */
     private $createdAt;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="OpenCephalonBundle\Entity\ItemFromSourceStream", mappedBy="sourceStream")
+     */
+    private $itemFromSourceStreams;
+
+
+
     /**
      * @return mixed
      */

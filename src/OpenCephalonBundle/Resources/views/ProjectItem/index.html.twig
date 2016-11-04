@@ -30,9 +30,21 @@
 	<p>Published At</p>
 	<p>{{  item.publishedAt | date('r') }}</p>
 
-	{%  if item.sourceStream %}
-		<p>Source Stream</p>
-		<p><a href="{{ path('opencephalon_project_source_stream',{ 'projectId':project.publicId, 'sourceId': item.sourceStream.source.publicId, 'streamId':item.sourceStream.publicId}) }}" class="btn btn-default">View</a></p>
+	{%  if sourceStreams %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Source Stream</th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			{%  for sourceStream in sourceStreams %}
+				<tr>
+					<td>{{  sourceStream.url }}</td>
+					<td><a href="{{ path('opencephalon_project_source_stream',{ 'projectId':project.publicId, 'sourceId': sourceStream.source.publicId, 'streamId':sourceStream.publicId}) }}" class="btn btn-default">View</a></td>
+				</tr>
+			{%  endfor %}
+		</table>
 	{%  endif %}
 
 {%  endblock %}
