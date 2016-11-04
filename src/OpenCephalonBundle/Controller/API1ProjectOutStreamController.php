@@ -50,18 +50,20 @@ class API1ProjectOutStreamController extends Controller
 
         $doctrine = $this->getDoctrine()->getManager();
         $repo = $doctrine->getRepository('OpenCephalonBundle:Item');
+        $sourceRepo = $doctrine->getRepository('OpenCephalonBundle:Source');
 
         $data = array(
             'items'=>array(),
         );
 
         foreach($repo->getLatestInOutStream($this->outStream, 50) as $item) {
+            $source = $sourceRepo->findOneByItem($item);
             $data['items'][] = array(
                 'title'=>$item->getTitle(),
                 'description'=>$item->getDescription(),
                 'url'=>$item->getURL(),
-                'source'=>array(
-                    'title'=>$item->getSourceStream()->getSource()->getTitle(),
+                'source'=> array(
+                    'title'=>$source->getTitle(),
                 ),
                 'published_at'=>$item->getPublishedAt()->format('r'),
             );

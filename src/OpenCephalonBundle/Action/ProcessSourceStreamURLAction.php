@@ -64,6 +64,7 @@ class ProcessSourceStreamURLAction
         $doctrine = $this->container->get('doctrine')->getEntityManager();
         $itemRepo = $doctrine->getRepository('OpenCephalonBundle:Item');
         $itemIdRSSRepo = $doctrine->getRepository('OpenCephalonBundle:ItemIdRSS');
+        $itemFromSourceStreamRepo = $doctrine->getRepository('OpenCephalonBundle:ItemFromSourceStream');
 
         // Look for Item!
         $item = null;
@@ -101,22 +102,32 @@ class ProcessSourceStreamURLAction
             $doctrine->persist($itemId);
             $doctrine->flush(array($item, $itemId));
 
-            $itemFromSourceStream = new ItemFromSourceStream();
-            $itemFromSourceStream->setSourceStream($sourceStream);
-            $itemFromSourceStream->setItem($item);
-            $doctrine->persist($itemFromSourceStream);
-            $doctrine->flush($itemFromSourceStream);
+            $this->writeItemFromSourceStreamRecord($item, $sourceStream);
 
         } else {
             $item->setFromModel($modelItem);
             $doctrine->persist($item);
             $doctrine->flush($item);
 
-            // TODO is there a $itemFromSourceStream record for this item and sourcestream?
+            // is there a $itemFromSourceStream record for this item and sourcestream?
             // If not, add it!
+            $itemFromSourceStream = $itemFromSourceStreamRepo->findOneBy(array('item'=>$item, 'sourceStream'=>$sourceStream));
+            if (!$itemFromSourceStream) {
+                $this->writeItemFromSourceStreamRecord($item, $sourceStream);
+            }
         }
 
         $this->addItemToStreamsAction->go($sourceStream, $item);
+
+    }
+
+    protected function writeItemFromSourceStreamRecord(Item $item, SourceStream $sourceStream) {
+        $doctrine = $this->container->get('doctrine')->getEntityManager();
+        $itemFromSourceStream = new ItemFromSourceStream();
+        $itemFromSourceStream->setSourceStream($sourceStream);
+        $itemFromSourceStream->setItem($item);
+        $doctrine->persist($itemFromSourceStream);
+        $doctrine->flush($itemFromSourceStream);
 
     }
 
