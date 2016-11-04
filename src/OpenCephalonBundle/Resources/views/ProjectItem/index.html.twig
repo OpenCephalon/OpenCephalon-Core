@@ -47,4 +47,40 @@
 		</table>
 	{%  endif %}
 
+	{%  if  outStreams %}
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>Out Stream</th>
+				<th>It Out Stream?</th>
+				<th>&nbsp;</th>
+			</tr>
+			</thead>
+			<tbody>
+			{%  for outStream in outStreams %}
+				<tr>
+					<td>
+						{{  outStream.outStream.title }}
+					</td>
+					<td>
+						{%  if outStream.inOutStream %}
+							YES
+						{%  else %}
+						{%  endif %}
+					</td>
+					<td>
+						{%  if outStream.inOutStream %}
+							<form  action="#" method="post">
+								<input type="hidden" name="action" value="remove">
+								<input type="hidden" name="outStream" value="{{ outStream.outStream.publicId }}">
+								<input type="submit" value="Remove" class="btn btn-warning">
+							</form>
+						{%  endif %}
+					</td>
+				</tr>
+			{%  endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+
 {%  endblock %}

@@ -9,7 +9,7 @@ use OpenCephalonBundle\Entity\Item;
 use OpenCephalonBundle\Entity\OutStream;
 use OpenCephalonBundle\Entity\Project;
 use OpenCephalonBundle\Entity\Source;
-
+use OpenCephalonBundle\Entity\User;
 
 
 /**
@@ -73,6 +73,19 @@ class ItemRepository extends EntityRepository
             ->setParameter('outStream', $outStream)
             ->getResult();
         return (boolean)$s;
+    }
+
+    public function removeItemFromOutStream(Item $item, OutStream $outStream, User $user = null) {
+
+        foreach($this->getEntityManager()->getRepository('OpenCephalonBundle:OutStreamHasItem')->findBy(array('item'=>$item, 'outStream'=>$outStream)) as $outStreamHasItem) {
+            if (!$outStreamHasItem->getRemovedAt()) {
+                $outStreamHasItem->setRemovedAt(new \DateTime());
+                $outStreamHasItem->setRemovedByUser($user);
+                $this->getEntityManager()->persist($outStreamHasItem);
+                $this->getEntityManager()->flush($outStreamHasItem);
+            }
+        }
+
     }
 
 }
