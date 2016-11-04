@@ -7,9 +7,11 @@ use OpenCephalonBundle\Entity\Project;
 use OpenCephalonBundle\Entity\Source;
 use OpenCephalonBundle\Entity\SourceStream;
 use OpenCephalonBundle\Entity\SourceStreamToOutStream;
+use OpenCephalonBundle\Entity\SourceStreamToOutStreamCondition;
 use OpenCephalonBundle\Form\Type\OutStreamNewType;
 use OpenCephalonBundle\Form\Type\ProjectNewType;
 use OpenCephalonBundle\Form\Type\SourceNewType;
+use OpenCephalonBundle\Form\Type\SourceStreamToOutStreamConditionNewType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -85,7 +87,44 @@ class ProjectSourceStreamToOutStreamController extends Controller
     }
 
 
+    public function newConditionAction($projectId, $sourceId, $streamId, $outStreamId)
+    {
+        // build
+        $this->build($projectId, $sourceId, $streamId, $outStreamId);
+        //data
+
+        $doctrine = $this->getDoctrine()->getManager();
 
 
+        $form = $this->createForm(new SourceStreamToOutStreamConditionNewType());
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+
+                $sourceStreamToOutStreamCondition = new SourceStreamToOutStreamCondition();
+                $sourceStreamToOutStreamCondition->setSourceStream($this->sourceStream);
+                $sourceStreamToOutStreamCondition->setOutStream($this->outStream);
+                $sourceStreamToOutStreamCondition->setContains($form->get('contains')->getData());
+                $doctrine->persist($sourceStreamToOutStreamCondition);
+                $doctrine->flush();
+                return $this->redirect($this->generateUrl('opencephalon_project_source_stream_outstream_condition_list', array(
+                    'projectId'=>$this->project->getPublicId(),
+                    'sourceId'=>$this->source->getPublicId(),
+                    'streamId'=>$this->sourceStream->getPublicId(),
+                    'outStreamId'=>$this->outStream->getPublicId(),
+                )));
+            }
+        }
+
+        return $this->render('OpenCephalonBundle:ProjectSourceStreamToOutStream:newCondition.html.twig', array(
+            'project' => $this->project,
+            'source' => $this->source,
+            'sourceStream' => $this->sourceStream,
+            'outStream' => $this->outStream,
+            'form' => $form->createView(),
+        ));
+
+    }
 
 }

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  *  @license 3-clause BSD
  *  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="OpenCephalonBundle\Repository\SourceStreamToOutStreamConditionRepository")
  * @ORM\Table(name="source_stream_to_out_stream_condition", uniqueConstraints={@ORM\UniqueConstraint(name="source_stream_to_out_stream_condition_public_id", columns={"source_stream_id", "out_stream_id", "public_id"})})
  * @ORM\HasLifecycleCallbacks
  */

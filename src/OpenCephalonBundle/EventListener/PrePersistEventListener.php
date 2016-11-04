@@ -8,6 +8,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use OpenCephalonBundle\Entity\Item;
 use OpenCephalonBundle\Entity\Source;
 use OpenCephalonBundle\Entity\SourceStream;
+use OpenCephalonBundle\Entity\SourceStreamToOutStreamCondition;
 use OpenCephalonBundle\OpenCephalonBundle;
 
 
@@ -59,6 +60,19 @@ class PrePersistEventListener  {
                 $idLen = self::MIN_LENGTH;
                 $id =  OpenCephalonBundle::createKey(1,$idLen);
                 while($manager->doesPublicIdExist($id, $entity->getProject())) {
+                    if ($idLen < self::MAX_LENGTH) {
+                        $idLen = $idLen + self::LENGTH_STEP;
+                    }
+                    $id =  OpenCephalonBundle::createKey(1,$idLen);
+                }
+                $entity->setPublicId($id);
+            }
+        } else if ($entity instanceof SourceStreamToOutStreamCondition) {
+            if (!$entity->getPublicId()) {
+                $manager = $args->getEntityManager()->getRepository('OpenCephalonBundle\Entity\SourceStreamToOutStreamCondition');
+                $idLen = self::MIN_LENGTH;
+                $id =  OpenCephalonBundle::createKey(1,$idLen);
+                while($manager->doesPublicIdExist($id, $entity->getSourceStream(), $entity->getOutStream())) {
                     if ($idLen < self::MAX_LENGTH) {
                         $idLen = $idLen + self::LENGTH_STEP;
                     }

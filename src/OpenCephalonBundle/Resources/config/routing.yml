@@ -61,7 +61,11 @@ opencephalon_project_source_stream_outstreams_list:
     path:     /project/{projectId}/source/{sourceId}/stream/{streamId}/outstreams
     defaults: { _controller: OpenCephalonBundle:ProjectSourceStream:outstreams }
 
-opencephalon_project_source_stream_outstreams_conditions_list:
+opencephalon_project_source_stream_outstream_new_condition:
+    path:     /project/{projectId}/source/{sourceId}/stream/{streamId}/outstream/{outStreamId}/new/condition
+    defaults: { _controller: OpenCephalonBundle:ProjectSourceStreamToOutStream:newCondition }
+
+opencephalon_project_source_stream_outstream_condition_list:
     path:     /project/{projectId}/source/{sourceId}/stream/{streamId}/outstream/{outStreamId}/condition
     defaults: { _controller: OpenCephalonBundle:ProjectSourceStreamToOutStream:conditions }
 
