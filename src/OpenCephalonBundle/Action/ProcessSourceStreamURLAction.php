@@ -9,6 +9,9 @@ use OpenCephalonBundle\Entity\ItemIdRSS;
 use OpenCephalonBundle\Entity\SourceStream;
 use OpenCephalonBundle\Model\BaseItem;
 use OpenCephalonBundle\Model\ItemRSS;
+use OpenCephalonBundle\Model\ItemSimplePie;
+use OpenCephalonBundle\Model\ItemSimplePieRSS;
+use SimplePie;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputArgument;
@@ -40,18 +43,31 @@ class ProcessSourceStreamURLAction
 
     function go(SourceStream $sourceStream) {
 
-        $res = $this->guzzleClient->request('GET', $sourceStream->getURL(), array());
 
-        if ($res->getStatusCode() == 200) {
+        $feed = new SimplePie();
+        $feed->set_feed_url($sourceStream->getUrl());
+        $feed->enable_cache(false);
+        $feed->init();
 
-            $data = new \SimpleXMLElement($res->getBody());
 
-            foreach($data->channel->item as $dataItem) {
+        foreach($feed->get_items() as $itemSimplePie) {
 
-                $itemRSS = new ItemRSS($dataItem);
-                if ($itemRSS->isValid()) {
-                    $this->processModelItem($sourceStream, $itemRSS);
+            if ($feed->get_type() & SIMPLEPIE_TYPE_RSS_ALL) {
+
+                $item = new ItemSimplePieRSS( $itemSimplePie );
+                if ( $item->isValid() ) {
+                    $this->processModelItem( $sourceStream, $item );
                 }
+
+            } else if ($feed->get_type() & SIMPLEPIE_TYPE_ATOM_ALL) {
+
+                $item = new ItemSimplePieAtom( $itemSimplePie );
+                if ( $item->isValid() ) {
+                    $this->processModelItem( $sourceStream, $item );
+                }
+
+            } else {
+
 
             }
 
@@ -64,13 +80,23 @@ class ProcessSourceStreamURLAction
         $doctrine = $this->container->get('doctrine')->getEntityManager();
         $itemRepo = $doctrine->getRepository('OpenCephalonBundle:Item');
         $itemIdRSSRepo = $doctrine->getRepository('OpenCephalonBundle:ItemIdRSS');
+        $itemIdAtomRepo = $doctrine->getRepository('OpenCephalonBundle:ItemIdAtom');
         $itemFromSourceStreamRepo = $doctrine->getRepository('OpenCephalonBundle:ItemFromSourceStream');
 
         // Look for Item!
         $item = null;
-        if ($modelItem instanceof ItemRSS) {
+        if ($modelItem instanceof ItemSimplePieRSS) {
 
-            $itemId = $itemIdRSSRepo->findOneBy(array('guid'=>$modelItem->getGuid(),'source'=>$sourceStream->getSource()));
+            $itemId = $itemIdRSSRepo->findOneBy( array( 'guid'   => $modelItem->getGuid(),
+                                                        'source' => $sourceStream->getSource()
+                ) );
+            if ( $itemId ) {
+                $item = $itemId->getItem();
+            }
+
+        } else if ($modelItem instanceof ItemSimplePieAtom) {
+
+            $itemId = $itemIdAtomRepo->findOneBy(array('guid'=>$modelItem->getGuid(),'source'=>$sourceStream->getSource()));
             if ($itemId) {
                 $item = $itemId->getItem();
             }
@@ -89,8 +115,13 @@ class ProcessSourceStreamURLAction
 
             // If new Item, Create ID for it!
             $itemId = null;
-            if ($modelItem instanceof ItemRSS) {
+            if ($modelItem instanceof ItemSimplePieRSS) {
                 $itemId = new ItemIdRSS();
+                $itemId->setItem($item);
+                $itemId->setSource($sourceStream->getSource());
+                $itemId->setGuid($modelItem->getGuid());
+            } else if ($modelItem instanceof ItemSimplePieAtom) {
+                $itemId = new ItemIdAtom();
                 $itemId->setItem($item);
                 $itemId->setSource($sourceStream->getSource());
                 $itemId->setGuid($modelItem->getGuid());
