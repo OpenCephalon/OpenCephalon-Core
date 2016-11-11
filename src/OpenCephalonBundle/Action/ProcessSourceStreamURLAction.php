@@ -5,19 +5,15 @@ namespace OpenCephalonBundle\Action;
 
 use OpenCephalonBundle\Entity\Item;
 use OpenCephalonBundle\Entity\ItemFromSourceStream;
+use OpenCephalonBundle\Entity\ItemIdAtom;
 use OpenCephalonBundle\Entity\ItemIdRSS;
 use OpenCephalonBundle\Entity\SourceStream;
 use OpenCephalonBundle\Model\BaseItem;
 use OpenCephalonBundle\Model\ItemRSS;
 use OpenCephalonBundle\Model\ItemSimplePie;
+use OpenCephalonBundle\Model\ItemSimplePieAtom;
 use OpenCephalonBundle\Model\ItemSimplePieRSS;
 use SimplePie;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  *  @license 3-clause BSD
