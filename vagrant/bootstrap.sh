@@ -44,7 +44,14 @@ rm -r /vagrant/app/cache/dev/*
 a2enmod rewrite
 /etc/init.d/apache2 restart
 
-php app/console doctrine:migrations:migrate --no-interaction
+
+if [ -f /vagrant/import.sql ]
+then
+    export PGPASSWORD=password
+    psql -U app -hlocalhost  app -f /vagrant/import.sql
+else
+    php app/console doctrine:migrations:migrate --no-interaction
+fi
 
 chown -R www-data:www-data /vagrant/app/cache/prod/
 chown -R www-data:www-data /vagrant/app/cache/dev/
