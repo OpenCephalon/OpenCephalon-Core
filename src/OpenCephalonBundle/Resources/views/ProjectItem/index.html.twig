@@ -12,7 +12,8 @@
 
 
 	<ol class="breadcrumb">
-		<li class="active">Project {{  project.title }}</li>
+		<li><a href="{{  path('opencephalon_project', { 'projectId':project.publicId }) }}">Project {{  project.title }}</a></li>
+		<li class="active">Item</li>
 	</ol>
 
 

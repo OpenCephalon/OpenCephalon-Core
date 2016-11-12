@@ -12,6 +12,11 @@
 
 
 
+	<ol class="breadcrumb">
+		<li><a href="{{  path('opencephalon_project', { 'projectId':project.publicId }) }}">Project {{  project.title }}</a></li>
+		<li class="active">New Out Stream</li>
+	</ol>
+
 	<section class="">
 
 		<form class="styled" action="" method="post" {{ form_enctype(form) }}>

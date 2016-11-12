@@ -13,8 +13,9 @@
 
 
 	<ol class="breadcrumb">
-		<li class="active">Project {{  project.title }}</li>
-		<li class="active">Source {{  source.title }}</li>
+		<li><a href="{{  path('opencephalon_project', { 'projectId':project.publicId }) }}">Project {{  project.title }}</a></li>
+		<li><a href="{{  path('opencephalon_project_source', { 'projectId':project.publicId, 'sourceId':source.publicId }) }}">Source {{ source.title }}</a></li>
+		<li class="active">Streams</li>
 	</ol>
 
 

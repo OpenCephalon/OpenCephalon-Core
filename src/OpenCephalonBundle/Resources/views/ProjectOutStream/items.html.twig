@@ -12,8 +12,9 @@
 
 
 	<ol class="breadcrumb">
-		<li class="active">Project {{  project.title }}</li>
-		<li class="active">Out Stream {{  outStream.title }}</li>
+		<li><a href="{{  path('opencephalon_project', { 'projectId':project.publicId }) }}">Project {{  project.title }}</a></li>
+		<li><a href="{{  path('opencephalon_project_outstream', {'projectId':project.publicId, 'outStreamId':outStream.publicId}) }}">Out Stream {{ outStream.title }}</a></li>
+		<li class="active">Items</li>
 	</ol>
 
 

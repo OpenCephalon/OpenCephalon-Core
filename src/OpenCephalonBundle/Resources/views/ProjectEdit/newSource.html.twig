@@ -11,6 +11,10 @@
 {% block main %}
 
 
+	<ol class="breadcrumb">
+		<li><a href="{{  path('opencephalon_project', { 'projectId':project.publicId }) }}">Project {{  project.title }}</a></li>
+		<li class="active">New Source</li>
+	</ol>
 
 	<section class="">
 
