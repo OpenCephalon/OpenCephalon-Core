@@ -68,6 +68,13 @@ class Item
     private $publishedAt;
 
     /**
+     * @var datetime $publishedAt
+     *
+     * @ORM\Column(name="effective_published_at", type="datetime", nullable=false)
+     */
+    private $effectivePublishedAt;
+
+    /**
      * @var datetime $createdAt
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
@@ -86,6 +93,17 @@ class Item
         $this->description = $baseItem->getDescription();
         $this->url = $baseItem->getURL();
         $this->publishedAt = $baseItem->getPublishedDate();
+
+        $compareTo = $this->createdAt ? $this->createdAt : new \DateTime();
+        if ($baseItem->getPublishedDate()->getTimestamp() > $compareTo->getTimestamp()) {
+            // Now, they claim the published date is AFTER current time or when this item was created in this store.
+            // They are fibbing.
+            // We'll go with the first time we saw this instead.
+            $this->effectivePublishedAt = clone $compareTo;
+        } else {
+            // We have to trust the published date they tell us!
+            $this->effectivePublishedAt = $baseItem->getPublishedDate();
+        }
     }
 
 
@@ -215,6 +233,26 @@ class Item
     public function getPublishedAt()
     {
         return $this->publishedAt;
+    }
+
+    /**
+     * @return datetime
+     */
+    public function getEffectivePublishedAt() {
+        return $this->effectivePublishedAt;
+    }
+
+    /**
+     * @param datetime $effectivePublishedAt
+     */
+    public function setEffectivePublishedAt( $effectivePublishedAt ) {
+        $this->effectivePublishedAt = $effectivePublishedAt;
+    }
+
+
+    public function isEffectivePublishedAtDifferent() {
+        return $this->effectivePublishedAt && $this->publishedAt &&
+               $this->effectivePublishedAt->getTimeStamp() != $this->publishedAt->getTimeStamp();
     }
 
     public function getSearchText() {

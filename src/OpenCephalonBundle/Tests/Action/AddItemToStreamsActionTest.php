@@ -63,6 +63,7 @@ class AddItemToStreamsActionTest extends BaseTestWithDataBase {
         $item = new Item();
         $item->setProject($project);
         $item->setPublishedAt(new \DateTime());
+        $item->setEffectivePublishedAt(new \DateTime());
         $this->em->persist($item);
 
         $this->em->flush();
@@ -138,6 +139,7 @@ class AddItemToStreamsActionTest extends BaseTestWithDataBase {
         $item = new Item();
         $item->setProject($project);
         $item->setPublishedAt(new \DateTime());
+        $item->setEffectivePublishedAt(new \DateTime());
         $this->em->persist($item);
 
         $this->em->flush();
@@ -207,6 +209,7 @@ class AddItemToStreamsActionTest extends BaseTestWithDataBase {
         $item = new Item();
         $item->setProject($project);
         $item->setPublishedAt(new \DateTime());
+        $item->setEffectivePublishedAt(new \DateTime());
         $this->em->persist($item);
 
         $this->em->flush();
@@ -294,6 +297,7 @@ class AddItemToStreamsActionTest extends BaseTestWithDataBase {
         $item->setTitle('the cat sat on the mat');
         $item->setProject($project);
         $item->setPublishedAt(new \DateTime());
+        $item->setEffectivePublishedAt(new \DateTime());
         $this->em->persist($item);
 
         $this->em->flush();
@@ -366,6 +370,7 @@ class AddItemToStreamsActionTest extends BaseTestWithDataBase {
         $item->setTitle('the cat sat on the mat');
         $item->setProject($project);
         $item->setPublishedAt(new \DateTime());
+        $item->setEffectivePublishedAt(new \DateTime());
         $this->em->persist($item);
 
         $this->em->flush();

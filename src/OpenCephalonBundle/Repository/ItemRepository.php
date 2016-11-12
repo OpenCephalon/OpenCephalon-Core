@@ -44,7 +44,7 @@ class ItemRepository extends EntityRepository
                 ' SELECT i FROM OpenCephalonBundle:item i'.
                 ' JOIN i.outStreamHasItems oshi '.
                 ' WHERE oshi.outStream = :outstream AND oshi.removedAt IS NULL '.
-                ' ORDER BY i.publishedAt DESC '
+                ' ORDER BY i.effectivePublishedAt DESC '
             )
             ->setMaxResults($count)
             ->setParameter('outstream', $outStream)

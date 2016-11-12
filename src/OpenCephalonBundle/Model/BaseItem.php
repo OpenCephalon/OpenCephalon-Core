@@ -16,6 +16,10 @@ abstract class  BaseItem {
 
     public abstract  function getDescription();
 
+
+    /**
+     * @return \DateTime
+     */
     public abstract  function getPublishedDate();
 
     public function isValid() {

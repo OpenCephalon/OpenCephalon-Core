@@ -30,6 +30,15 @@
 	<p>Published At</p>
 	<p>{{  item.publishedAt | date('r') }}</p>
 
+	{%  if item.isEffectivePublishedAtDifferent %}
+		<p>Effective Published At</p>
+		<p>{{  item.effectivePublishedAt | date('r') }}</p>
+	{%  endif %}
+
+	<p>First Seen At</p>
+	<p>{{  item.createdAt | date('r') }}</p>
+
+
 	{%  if sourceStreams %}
 		<table class="table table-striped">
 			<thead>
