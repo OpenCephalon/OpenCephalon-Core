@@ -9,6 +9,7 @@ use OpenCephalonBundle\Entity\Item;
 use OpenCephalonBundle\Entity\OutStream;
 use OpenCephalonBundle\Entity\Project;
 use OpenCephalonBundle\Entity\Source;
+use OpenCephalonBundle\Entity\SourceStream;
 use OpenCephalonBundle\Entity\User;
 
 
@@ -36,6 +37,19 @@ class ItemRepository extends EntityRepository
         } else {
             return false;
         }
+    }
+
+    public function getLatestInSourceStream(SourceStream $sourceStream, $count=50) {
+        return $this->getEntityManager()
+            ->createQuery(
+                ' SELECT i FROM OpenCephalonBundle:item i'.
+                ' JOIN i.itemFromSourceStreams ifss '.
+                ' WHERE ifss.sourceStream = :sourcestream '.
+                ' ORDER BY i.effectivePublishedAt DESC '
+            )
+            ->setMaxResults($count)
+            ->setParameter('sourcestream', $sourceStream)
+            ->getResult();
     }
 
     public function getLatestInOutStream(OutStream $outStream, $count=50) {

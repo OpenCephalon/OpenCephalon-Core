@@ -88,6 +88,12 @@ class Item
     private $outStreamHasItems;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="OpenCephalonBundle\Entity\ItemFromSourceStream", mappedBy="item")
+     */
+    private $itemFromSourceStreams;
+
+
     public function setFromModel(BaseItem $baseItem) {
         $this->title = $baseItem->getTitle();
         $this->description = $baseItem->getDescription();

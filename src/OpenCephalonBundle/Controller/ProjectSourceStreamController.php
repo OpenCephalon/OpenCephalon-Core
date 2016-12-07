@@ -68,6 +68,24 @@ class ProjectSourceStreamController extends Controller
     }
 
 
+    public function itemsAction($projectId, $sourceId, $streamId, Request $request)
+    {
+        // build
+        $this->build($projectId, $sourceId, $streamId);
+
+        $doctrine = $this->getDoctrine()->getManager();
+        $itemRepo = $doctrine->getRepository('OpenCephalonBundle:Item');
+        $items = $itemRepo->getLatestInSourceStream($this->sourceStream);
+
+        // view
+        return $this->render('OpenCephalonBundle:ProjectSourceStream:items.html.twig', array(
+            'project' => $this->project,
+            'source' => $this->source,
+            'sourceStream' => $this->sourceStream,
+            'items' => $items,
+        ));
+    }
+
     public function outstreamsAction($projectId, $sourceId, $streamId, Request $request)
     {
         $doctrine = $this->getDoctrine()->getManager();
