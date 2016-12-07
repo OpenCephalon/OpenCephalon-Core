@@ -55,7 +55,7 @@ class ProjectController extends Controller
 
         $doctrine = $this->getDoctrine()->getManager();
         $repo = $doctrine->getRepository('OpenCephalonBundle:Source');
-        $sources = $repo->findByProject($this->project);
+        $sources = $repo->findBy(array('project'=>$this->project), array('title'=>'ASC'));
 
         return $this->render('OpenCephalonBundle:Project:sources.html.twig', array(
             'project'=>$this->project,
