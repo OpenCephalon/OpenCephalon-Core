@@ -44,6 +44,13 @@ class SourceStream
     private $url;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description_remove_from_end", type="text", nullable=true)
+     */
+    private $descriptionRemoveFromEnd;
+
+    /**
      * @var datetime $createdAt
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
@@ -105,6 +112,23 @@ class SourceStream
     {
         return $this->source;
     }
+
+    /**
+     * @return string
+     */
+    public function getDescriptionRemoveFromEnd() {
+        return $this->descriptionRemoveFromEnd;
+    }
+
+    /**
+     * @param string $descriptionRemoveFromEnd
+     */
+    public function setDescriptionRemoveFromEnd( $descriptionRemoveFromEnd ) {
+        $this->descriptionRemoveFromEnd = $descriptionRemoveFromEnd;
+    }
+
+
+
 
     /**
      * @param string $url

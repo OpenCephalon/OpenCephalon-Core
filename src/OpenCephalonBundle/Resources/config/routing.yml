@@ -56,6 +56,10 @@ opencephalon_project_source_stream:
     path:     /project/{projectId}/source/{sourceId}/stream/{streamId}
     defaults: { _controller: OpenCephalonBundle:ProjectSourceStream:index }
 
+opencephalon_project_source_stream_edit:
+    path:     /project/{projectId}/source/{sourceId}/stream/{streamId}/edit
+    defaults: { _controller: OpenCephalonBundle:ProjectSourceStreamEdit:edit }
+
 
 opencephalon_project_source_stream_items_list:
     path:     /project/{projectId}/source/{sourceId}/stream/{streamId}/items

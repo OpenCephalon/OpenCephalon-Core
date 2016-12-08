@@ -79,6 +79,9 @@ class ProcessSourceStreamURLAction
         $itemIdAtomRepo = $doctrine->getRepository('OpenCephalonBundle:ItemIdAtom');
         $itemFromSourceStreamRepo = $doctrine->getRepository('OpenCephalonBundle:ItemFromSourceStream');
 
+        // Work on base item
+        $modelItem->processSourceStreamOptions($sourceStream);
+
         // Look for Item!
         $item = null;
         if ($modelItem instanceof ItemSimplePieRSS) {

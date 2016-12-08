@@ -14,10 +14,12 @@ class ItemSimplePieAtom extends BaseItem {
     /** @var  SimplePie_Item */
     protected $data;
 
+    protected $description;
+
     function __construct( SimplePie_Item $data ) {
         $this->data = $data;
+        $this->description = strip_tags($this->data->get_description());
     }
-
 
     public function getTitle() {
         return $this->data->get_title();
@@ -28,7 +30,11 @@ class ItemSimplePieAtom extends BaseItem {
     }
 
     public function getDescription() {
-        return strip_tags($this->data->get_description());
+        return $this->description;
+    }
+
+    protected function setDescription( $description ) {
+        $this->description = $description;
     }
 
     public function getPublishedDate() {
@@ -38,5 +44,4 @@ class ItemSimplePieAtom extends BaseItem {
     public function getGuid() {
         return $this->data->get_id();
     }
-
 }
