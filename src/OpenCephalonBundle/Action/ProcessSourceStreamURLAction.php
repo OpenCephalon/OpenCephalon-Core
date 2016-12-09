@@ -140,9 +140,13 @@ class ProcessSourceStreamURLAction
             $doctrine->flush($item);
 
             // is there a $itemFromSourceStream record for this item and sourcestream?
-            // If not, add it!
+            // If yes, Edit. If not, add it!
             $itemFromSourceStream = $itemFromSourceStreamRepo->findOneBy(array('item'=>$item, 'sourceStream'=>$sourceStream));
-            if (!$itemFromSourceStream) {
+            if ($itemFromSourceStream) {
+                $itemFromSourceStream->setLastSeenAt(new \DateTime());
+                $doctrine->persist($itemFromSourceStream);
+                $doctrine->flush($itemFromSourceStream);
+            } else {
                 $this->writeItemFromSourceStreamRecord($item, $sourceStream);
             }
         }

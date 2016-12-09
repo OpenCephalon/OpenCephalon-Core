@@ -37,6 +37,14 @@ class ItemFromSourceStream
      */
     private $createdAt;
 
+
+    /**
+     * @var datetime $publishedAt
+     *
+     * @ORM\Column(name="last_seen_at", type="datetime", nullable=false)
+     */
+    private $lastSeenAt;
+
     /**
      * @param \OpenCephalonBundle\Entity\datetime $createdAt
      */
@@ -102,10 +110,27 @@ class ItemFromSourceStream
     }
 
     /**
+     * @return datetime
+     */
+    public function getLastSeenAt() {
+        return $this->lastSeenAt;
+    }
+
+    /**
+     * @param datetime $lastSeenAt
+     */
+    public function setLastSeenAt( $lastSeenAt ) {
+        $this->lastSeenAt = $lastSeenAt;
+    }
+
+
+
+    /**
      * @ORM\PrePersist()
      */
     public function beforeFirstSave() {
         $this->createdAt = new \DateTime("", new \DateTimeZone("UTC"));
+        $this->lastSeenAt = new \DateTime("", new \DateTimeZone("UTC"));
     }
 
 

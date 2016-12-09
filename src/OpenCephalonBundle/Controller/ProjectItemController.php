@@ -49,6 +49,7 @@ class ProjectItemController extends Controller
         $doctrine = $this->getDoctrine()->getManager();
         $itemRepo = $doctrine->getRepository('OpenCephalonBundle:Item');
         $outStreamRepo = $doctrine->getRepository('OpenCephalonBundle:OutStream');
+        $itemFromSourceStreamStreamRepo = $doctrine->getRepository('OpenCephalonBundle:ItemFromSourceStream');
 
         // build
         $this->build($projectId, $itemId);
@@ -64,7 +65,13 @@ class ProjectItemController extends Controller
         }
 
         //data
-        $sourceStreams = $doctrine->getRepository('OpenCephalonBundle:SourceStream')->findByItem($this->item);
+        $sourceStreams = array();
+        foreach($doctrine->getRepository('OpenCephalonBundle:SourceStream')->findByItem($this->item) as $sourceStream) {
+            $sourceStreams[] = array(
+                'sourceStream' => $sourceStream,
+                'lastSeenAt' => $itemFromSourceStreamStreamRepo->findOneBy(array('item'=>$this->item, 'sourceStream'=>$sourceStream))->getLastSeenAt(),
+            );
+        }
 
         $outstreams = array();
         foreach($doctrine->getRepository('OpenCephalonBundle:OutStream')->findByProject($this->project) as $outstream) {

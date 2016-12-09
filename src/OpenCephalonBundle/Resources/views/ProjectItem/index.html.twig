@@ -45,13 +45,15 @@
 			<thead>
 				<tr>
 					<th>Source Stream</th>
+					<th>Last Seen</th>
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
-			{%  for sourceStream in sourceStreams %}
+			{%  for sourceStreamData in sourceStreams %}
 				<tr>
-					<td>{{  sourceStream.url }}</td>
-					<td><a href="{{ path('opencephalon_project_source_stream',{ 'projectId':project.publicId, 'sourceId': sourceStream.source.publicId, 'streamId':sourceStream.publicId}) }}" class="btn btn-default">View</a></td>
+					<td>{{  sourceStreamData.sourceStream.url }}</td>
+					<td>{{  sourceStreamData.lastSeenAt | date('r') }}</td>
+					<td><a href="{{ path('opencephalon_project_source_stream',{ 'projectId':project.publicId, 'sourceId': sourceStreamData.sourceStream.source.publicId, 'streamId':sourceStreamData.sourceStream.publicId}) }}" class="btn btn-default">View</a></td>
 				</tr>
 			{%  endfor %}
 		</table>
