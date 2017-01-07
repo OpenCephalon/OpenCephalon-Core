@@ -1,0 +1,50 @@
+{##
+#  @license 3-clause BSD
+#  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
+##}
+
+
+{% extends 'OpenCephalonBundle::base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block main %}
+
+
+	<ol class="breadcrumb">
+		<li><a href="{{  path('opencephalon_project', { 'projectId':project.publicId }) }}">Project {{  project.title }}</a></li>
+		<li><a href="{{  path('opencephalon_project_outstream', {'projectId':project.publicId, 'outStreamId':outStream.publicId}) }}">Out Stream {{ outStream.title }}</a></li>
+		<li class="active">Items</li>
+	</ol>
+
+
+	<h1>Project {{ project.title }} Out Stream {{ outStream.title }} Items</h1>
+
+	{%  if  items %}
+		<ul class="itemsAsText">
+			{%  for item in items %}
+				<li class="itemAsText">
+					{# Font Weight Bold is set inline and not in app stylesheet so when you copy and past the formatting is preserved #}
+					<div class="title" style="font-weight: bold;">
+						<a href="{{  item.url }}">{{  item.title }}</a>
+					</div>
+					<div class="description">
+						{{  item.description }}
+					</div>
+					<div class="date">
+						{{  item.effectivePublishedAt | date('jS M Y') }}
+					</div>
+					<div class="url">
+						<a href="{{  item.url }}">{{  item.url }}</a>
+					</div>
+					{# Have an actual &nbsp; so when text copied and pasted the new line is preserved #}
+					<div>&nbsp;</div>
+				</li>
+			{%  endfor %}
+		</ul>
+	{% else %}
+		<p>You have no items </p>
+	{% endif %}
+
+{%  endblock %}
+

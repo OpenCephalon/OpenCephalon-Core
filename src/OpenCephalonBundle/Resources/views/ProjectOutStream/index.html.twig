@@ -23,6 +23,8 @@
 
 	<ul class="list-group">
 		<li class="list-group-item"><a href="{{  path('opencephalon_project_outstream_item_list', { 'projectId':project.publicId, 'outStreamId': outStream.publicId }) }}" class="btn btn-default">Items</a></li>
+		<li class="list-group-item"><a href="{{  path('opencephalon_project_outstream_item_list_as_text', { 'projectId':project.publicId, 'outStreamId': outStream.publicId }) }}" class="btn btn-default">Items As Text</a></li>
 	</ul>
 
 {%  endblock %}
+

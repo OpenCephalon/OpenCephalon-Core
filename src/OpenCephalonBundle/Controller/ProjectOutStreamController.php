@@ -71,6 +71,23 @@ class ProjectOutStreamController extends Controller
         ));
     }
 
+    public function itemsAsTextAction($projectId, $outStreamId)
+    {
+        // build
+        $this->build($projectId, $outStreamId);
+        //data
+
+        $doctrine = $this->getDoctrine()->getManager();
+        $repo = $doctrine->getRepository('OpenCephalonBundle:Item');
+        $items = $repo->getLatestInOutStream($this->outStream, 50);
+
+        return $this->render('OpenCephalonBundle:ProjectOutStream:itemsAsText.html.twig', array(
+            'project'=>$this->project,
+            'outStream' => $this->outStream,
+            'items' => $items,
+        ));
+    }
+
 
 
 }

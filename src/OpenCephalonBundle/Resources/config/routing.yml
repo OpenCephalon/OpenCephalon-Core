@@ -92,6 +92,10 @@ opencephalon_project_outstream_item_list:
     path:     /project/{projectId}/outstream/{outStreamId}/item
     defaults: { _controller: OpenCephalonBundle:ProjectOutStream:items }
 
+opencephalon_project_outstream_item_list_as_text:
+    path:     /project/{projectId}/outstream/{outStreamId}/itemAsText
+    defaults: { _controller: OpenCephalonBundle:ProjectOutStream:itemsAsText }
+
 
 opencephalon_api1_project_outstream_item_list_json:
     path:     /api1/project/{projectId}/outstream/{outStreamId}/items.json
