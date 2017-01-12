@@ -28,7 +28,8 @@
         "friendsofsymfony/user-bundle": "2.0.0-alpha3",
         "doctrine/doctrine-migrations-bundle": "1.1.*",
         "guzzlehttp/guzzle":"6.2.*",
-		"simplepie/simplepie":"1.4.*"
+		"simplepie/simplepie":"1.4.*",
+		"abraham/twitteroauth": "0.7.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

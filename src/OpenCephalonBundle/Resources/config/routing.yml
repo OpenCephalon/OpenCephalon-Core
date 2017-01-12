@@ -101,6 +101,16 @@ opencephalon_api1_project_outstream_item_list_json:
     path:     /api1/project/{projectId}/outstream/{outStreamId}/items.json
     defaults: { _controller: OpenCephalonBundle:API1ProjectOutStream:itemsJSON }
 
+opencephalon_project_outstream_new_twitter:
+    path:     /project/{projectId}/outstream/{outStreamId}/newTwitter
+    defaults: { _controller: OpenCephalonBundle:ProjectOutStreamEdit:newTwitter }
+
+
+opencephalon_project_outstream_new_twitter_callback:
+    path:     /project/{projectId}/outstream/{outStreamId}/newTwitter/callback
+    defaults: { _controller: OpenCephalonBundle:ProjectOutStreamEdit:newTwitterCallback }
+
+
 
 opencephalon_project_item:
     path:     /project/{projectId}/item/{itemId}

@@ -65,6 +65,20 @@ class ItemRepository extends EntityRepository
             ->getResult();
     }
 
+
+    public function getInOutStreamFromEffectivePublished(OutStream $outStream, \DateTime $after) {
+        return $this->getEntityManager()
+            ->createQuery(
+                ' SELECT i FROM OpenCephalonBundle:item i'.
+                ' JOIN i.outStreamHasItems oshi '.
+                ' WHERE oshi.outStream = :outstream AND oshi.removedAt IS NULL AND i.effectivePublishedAt > :after '.
+                ' ORDER BY i.effectivePublishedAt ASC '
+            )
+            ->setParameter('outstream', $outStream)
+            ->setParameter('after', $after)
+            ->getResult();
+    }
+
     public function wasItemEverInOutStream(Item $item, OutStream $outStream) {
         $s =  $this->getEntityManager()
             ->createQuery(

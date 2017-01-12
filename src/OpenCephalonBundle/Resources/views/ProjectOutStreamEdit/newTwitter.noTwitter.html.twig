@@ -1,0 +1,23 @@
+{##
+#  @license 3-clause BSD
+#  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
+##}
+
+
+{% extends 'OpenCephalonBundle::base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block main %}
+
+
+	<ol class="breadcrumb">
+		<li><a href="{{  path('opencephalon_project', { 'projectId':project.publicId }) }}">Project {{  project.title }}</a></li>
+		<li><a href="{{  path('opencephalon_project_outstream', {'projectId':project.publicId, 'outStreamId':outStream.publicId}) }}">Out Stream {{ outStream.title }}</a></li>
+		<li class="active">New Twitter</li>
+	</ol>
+
+	<p>Twitter App is not configured properly</p>
+
+{%  endblock %}
+

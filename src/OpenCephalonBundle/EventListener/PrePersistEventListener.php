@@ -9,6 +9,7 @@ use OpenCephalonBundle\Entity\Item;
 use OpenCephalonBundle\Entity\Source;
 use OpenCephalonBundle\Entity\SourceStream;
 use OpenCephalonBundle\Entity\SourceStreamToOutStreamCondition;
+use OpenCephalonBundle\Entity\OutStreamToTwitter;
 use OpenCephalonBundle\OpenCephalonBundle;
 
 
@@ -60,6 +61,19 @@ class PrePersistEventListener  {
                 $idLen = self::MIN_LENGTH;
                 $id =  OpenCephalonBundle::createKey(1,$idLen);
                 while($manager->doesPublicIdExist($id, $entity->getProject())) {
+                    if ($idLen < self::MAX_LENGTH) {
+                        $idLen = $idLen + self::LENGTH_STEP;
+                    }
+                    $id =  OpenCephalonBundle::createKey(1,$idLen);
+                }
+                $entity->setPublicId($id);
+            }
+        } else if ($entity instanceof OutStreamToTwitter) {
+            if (!$entity->getPublicId()) {
+                $manager = $args->getEntityManager()->getRepository('OpenCephalonBundle\Entity\OutStreamToTwitter');
+                $idLen = self::MIN_LENGTH;
+                $id =  OpenCephalonBundle::createKey(1,$idLen);
+                while($manager->doesPublicIdExist($id, $entity->getOutStream())) {
                     if ($idLen < self::MAX_LENGTH) {
                         $idLen = $idLen + self::LENGTH_STEP;
                     }
