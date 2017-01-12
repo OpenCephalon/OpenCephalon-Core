@@ -77,9 +77,19 @@ class OutStreamTweetAction {
 
     protected function getTweetContents(OutStreamToTwitter $outStreamToTwitter, Item $item) {
 
-        return ($outStreamToTwitter->hasContentPrefix() ? $outStreamToTwitter->getContentPrefix() . ' ': '').
-               substr($item->getTitle(),0, 60). ' '.
-               $item->getUrl();
+        $out = ($outStreamToTwitter->hasContentPrefix() ? $outStreamToTwitter->getContentPrefix() . ' ': '').
+               $item->getTitle();
+
+        $shortenedLinksLength = 30;
+
+        if (strlen($out) < (140 - $shortenedLinksLength)) {
+            return $out . ' '. $item->getUrl();
+        } else {
+            while(substr($out, -1) != ' ' || strlen($out) > (140 - $shortenedLinksLength - 3)) {
+                $out = substr($out, 0, -1);
+            }
+            return $out . '... '. $item->getUrl();
+        }
 
     }
 
