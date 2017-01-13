@@ -57,8 +57,8 @@ class OutStreamTweetAction {
 
                 $statues = $connection->post("statuses/update", ["status" => $this->getTweetContents($outStreamToTwitter, $item)]);
 
-                if (property_exists($statues, 'error') && $statues->error) {
-                    var_dump($statues->error);
+                if (property_exists($statues, 'errors') && $statues->errors) {
+                    var_dump($statues->errors);
                 } else {
                     $outStreamToTwitterHasItem->setTweetId( $statues->id_str );
                     $outStreamToTwitterHasItem->setTweetedAt( new \DateTime() );
