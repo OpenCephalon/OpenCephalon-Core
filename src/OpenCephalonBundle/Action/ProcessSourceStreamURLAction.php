@@ -48,6 +48,10 @@ class ProcessSourceStreamURLAction
         $feed->enable_cache(false);
         $feed->init();
 
+        if ($feed->error) {
+            // TODO Log!
+            return;
+        }
 
         foreach($feed->get_items() as $itemSimplePie) {
 
