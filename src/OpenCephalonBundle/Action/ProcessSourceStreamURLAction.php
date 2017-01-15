@@ -39,6 +39,9 @@ class ProcessSourceStreamURLAction
 
     function go(SourceStream $sourceStream) {
 
+        if (!$sourceStream->getIsActive()) {
+            return;
+        }
 
         $feed = new SimplePie();
         $feed->set_feed_url($sourceStream->getUrl());

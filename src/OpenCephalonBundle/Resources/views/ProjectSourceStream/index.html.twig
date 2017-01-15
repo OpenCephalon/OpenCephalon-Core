@@ -21,6 +21,11 @@
 
 	<h1>Project {{ project.title }} Source {{ source.title }} Stream {{ sourceStream.url }}</h1>
 
+	<p>Active</p>
+
+	<p>
+		{% if sourceStream.isActive %}Yes{%  else %}No{%  endif %}
+	</p>
 
 	<p>Description - Remove From End</p>
 

@@ -46,6 +46,13 @@ class SourceStream
     /**
      * @var string
      *
+     * @ORM\Column(name="is_active", type="boolean", nullable=false, options={"default" : true})
+     */
+    private $isActive;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description_remove_from_end", type="text", nullable=true)
      */
     private $descriptionRemoveFromEnd;
@@ -160,6 +167,20 @@ class SourceStream
     public function getPublicId()
     {
         return $this->publicId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIsActive() {
+        return $this->isActive;
+    }
+
+    /**
+     * @param string $isActive
+     */
+    public function setIsActive( $isActive ) {
+        $this->isActive = $isActive;
     }
 
 

@@ -39,6 +39,7 @@ class ProjectSourceEditController extends ProjectSourceController
                 $sourceStream = new SourceStream();
                 $sourceStream->setSource($this->source);
                 $sourceStream->setURL($form->get('url')->getData());
+                $sourceStream->setIsActive(true);
 
                 $doctrine->persist($sourceStream);
                 $doctrine->flush();

@@ -45,6 +45,7 @@ class AddItemToStreamsActionTest extends BaseTestWithDataBase {
         $sourceStream = new SourceStream();
         $sourceStream->setSource($source);
         $sourceStream->setUrl('http://example.com/');
+        $sourceStream->setIsActive(true);
         $this->em->persist($sourceStream);
 
         $outStream = new OutStream();
@@ -110,6 +111,7 @@ class AddItemToStreamsActionTest extends BaseTestWithDataBase {
         $sourceStream = new SourceStream();
         $sourceStream->setSource($source);
         $sourceStream->setUrl('http://example.com/');
+        $sourceStream->setIsActive(true);
         $this->em->persist($sourceStream);
 
         $outStream1 = new OutStream();
@@ -191,6 +193,7 @@ class AddItemToStreamsActionTest extends BaseTestWithDataBase {
         $sourceStream = new SourceStream();
         $sourceStream->setSource($source);
         $sourceStream->setUrl('http://example.com/');
+        $sourceStream->setIsActive(true);
         $this->em->persist($sourceStream);
 
         $outStream = new OutStream();
@@ -271,6 +274,7 @@ class AddItemToStreamsActionTest extends BaseTestWithDataBase {
         $sourceStream = new SourceStream();
         $sourceStream->setSource($source);
         $sourceStream->setUrl('http://example.com/');
+        $sourceStream->setIsActive(true);
         $this->em->persist($sourceStream);
 
         $outStream = new OutStream();
@@ -344,6 +348,7 @@ class AddItemToStreamsActionTest extends BaseTestWithDataBase {
         $sourceStream = new SourceStream();
         $sourceStream->setSource($source);
         $sourceStream->setUrl('http://example.com/');
+        $sourceStream->setIsActive(true);
         $this->em->persist($sourceStream);
 
         $outStream = new OutStream();

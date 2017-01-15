@@ -28,6 +28,7 @@
 			<thead>
 			<tr>
 				<th>Stream</th>
+				<th>Active</th>
 				<th>&nbsp;</th>
 			</tr>
 			</thead>
@@ -36,6 +37,9 @@
 				<tr>
 					<td>
 						{{  stream.url }}
+					</td>
+					<td>
+						{% if stream.isActive %}Yes{%  else %}No{%  endif %}
 					</td>
 					<td>
 						<a href="{{  path('opencephalon_project_source_stream', { 'projectId':project.publicId, 'sourceId':source.publicId, 'streamId':stream.publicId }) }}" class="btn btn-default">View</a>
