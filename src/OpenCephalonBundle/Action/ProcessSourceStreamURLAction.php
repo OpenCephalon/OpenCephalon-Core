@@ -44,6 +44,9 @@ class ProcessSourceStreamURLAction
         }
 
         $feed = new SimplePie();
+        if ($sourceStream->getUserAgent()) {
+            $feed->set_useragent($sourceStream->getUserAgent());
+        }
         $feed->set_feed_url($sourceStream->getUrl());
         $feed->enable_cache(false);
         $feed->init();

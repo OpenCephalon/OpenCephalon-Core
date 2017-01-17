@@ -39,9 +39,16 @@ class SourceStream
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=250, nullable=false)
+     * @ORM\Column(name="url", type="text", nullable=false)
      */
     private $url;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_agent", type="text", nullable=true)
+     */
+    private $userAgent;
 
     /**
      * @var string
@@ -151,6 +158,20 @@ class SourceStream
     public function getUrl()
     {
         return $this->url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserAgent() {
+        return $this->userAgent;
+    }
+
+    /**
+     * @param string $userAgent
+     */
+    public function setUserAgent( $userAgent ) {
+        $this->userAgent = $userAgent;
     }
 
     /**
