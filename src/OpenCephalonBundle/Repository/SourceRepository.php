@@ -39,6 +39,7 @@ class SourceRepository extends EntityRepository
 
     public function findOneByItem(Item $item) {
 
+        // Try ItemFromSourceStream
         $ifss =  $this->getEntityManager()
                    ->createQuery(
                        ' SELECT ifss FROM OpenCephalonBundle:ItemFromSourceStream ifss'.
@@ -50,6 +51,20 @@ class SourceRepository extends EntityRepository
         if ($ifss) {
             return $ifss[0]->getSourceStream()->getSource();
         }
+
+        // Try ItemFromSource
+        $ifss =  $this->getEntityManager()
+                      ->createQuery(
+                          ' SELECT ifs FROM OpenCephalonBundle:ItemFromSource ifs'.
+                          ' WHERE ifs.item = :item '
+                      )
+                      ->setParameter('item', $item)
+                      ->getResult();
+
+        if ($ifss) {
+            return $ifss[0]->getSource();
+        }
+
 
     }
 

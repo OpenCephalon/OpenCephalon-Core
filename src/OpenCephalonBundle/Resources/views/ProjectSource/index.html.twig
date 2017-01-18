@@ -24,6 +24,7 @@
 	<ul class="list-group">
 		<li class="list-group-item"><a href="{{  path('opencephalon_project_source_stream_list', { 'projectId':project.publicId, 'sourceId': source.publicId }) }}" class="btn btn-default">Streams</a></li>
 		<li class="list-group-item"><a href="{{  path('opencephalon_project_source_new_stream', { 'projectId':project.publicId, 'sourceId': source.publicId }) }}" class="btn btn-warning">New Stream</a></li>
+		<li class="list-group-item"><a href="{{  path('opencephalon_project_source_new_item', { 'projectId':project.publicId, 'sourceId': source.publicId }) }}" class="btn btn-warning">New Item</a></li>
 	</ul>
 
 {%  endblock %}

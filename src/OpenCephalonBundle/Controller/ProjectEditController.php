@@ -41,20 +41,32 @@ class ProjectEditController extends ProjectController
                 $source->setProject($this->project);
                 $source->setTitle($form->get('title')->getData());
 
-                $sourceStream = new SourceStream();
-                $sourceStream->setSource($source);
-                $sourceStream->setURL($form->get('url')->getData());
-                $sourceStream->setIsActive(true);
+                if ($form->get('url')->getData()) {
+                    $sourceStream = new SourceStream();
+                    $sourceStream->setSource( $source );
+                    $sourceStream->setURL( $form->get( 'url' )->getData() );
+                    $sourceStream->setIsActive( true );
 
-                $doctrine->persist($source);
-                $doctrine->persist($sourceStream);
-                $doctrine->flush();
+                    $doctrine->persist($source);
+                    $doctrine->persist($sourceStream);
+                    $doctrine->flush();
 
-                return $this->redirect($this->generateUrl('opencephalon_project_source_stream', array(
-                    'projectId'=>$this->project->getPublicId(),
-                    'sourceId'=>$source->getPublicId(),
-                    'streamId'=>$sourceStream->getPublicId(),
-                )));
+                    return $this->redirect($this->generateUrl('opencephalon_project_source_stream', array(
+                        'projectId'=>$this->project->getPublicId(),
+                        'sourceId'=>$source->getPublicId(),
+                        'streamId'=>$sourceStream->getPublicId(),
+                    )));
+                } else {
+
+                    $doctrine->persist($source);
+                    $doctrine->flush();
+
+                    return $this->redirect($this->generateUrl('opencephalon_project_source', array(
+                        'projectId'=>$this->project->getPublicId(),
+                        'sourceId'=>$source->getPublicId(),
+                    )));
+                }
+
             }
         }
 

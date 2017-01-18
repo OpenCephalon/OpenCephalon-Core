@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use OpenCephalonBundle\Entity\Item;
 use OpenCephalonBundle\Entity\OutStream;
+use OpenCephalonBundle\Entity\OutStreamHasItem;
 use OpenCephalonBundle\Entity\Project;
 use OpenCephalonBundle\Entity\Source;
 use OpenCephalonBundle\Entity\SourceStream;
@@ -112,6 +113,21 @@ class ItemRepository extends EntityRepository
                 $this->getEntityManager()->persist($outStreamHasItem);
                 $this->getEntityManager()->flush($outStreamHasItem);
             }
+        }
+
+    }
+    public function addItemToOutStream(Item $item, OutStream $outStream, User $user = null) {
+
+        if (!$this->isItemInOutStream($item, $outStream)) {
+
+            $outStreamHasItem = new OutStreamHasItem();
+            $outStreamHasItem->setItem($item);
+            $outStreamHasItem->setOutStream($outStream);
+            $outStreamHasItem->setAddedByUser($user);
+
+            $this->getEntityManager()->persist($outStreamHasItem);
+            $this->getEntityManager()->flush($outStreamHasItem);
+
         }
 
     }

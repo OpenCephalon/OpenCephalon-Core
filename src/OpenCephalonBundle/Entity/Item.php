@@ -26,7 +26,6 @@ class Item
 
     /**
      * @ORM\Column(name="public_id", type="string", length=250, unique=false, nullable=false)
-     * @Assert\NotBlank()
      */
     private $publicId;
 

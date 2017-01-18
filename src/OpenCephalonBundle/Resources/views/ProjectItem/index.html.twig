@@ -40,6 +40,23 @@
 	<p>{{  item.createdAt | date('r') }}</p>
 
 
+	{%  if sources %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Source</th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			{%  for source in sources %}
+				<tr>
+					<td>{{  source.source.title }}</td>
+					<td><a href="{{ path('opencephalon_project_source',{ 'projectId':project.publicId, 'sourceId': source.source.publicId, }) }}" class="btn btn-default">View</a></td>
+				</tr>
+			{%  endfor %}
+		</table>
+	{%  endif %}
+
 	{%  if sourceStreams %}
 		<table class="table table-striped">
 			<thead>
@@ -86,6 +103,12 @@
 								<input type="hidden" name="action" value="remove">
 								<input type="hidden" name="outStream" value="{{ outStream.outStream.publicId }}">
 								<input type="submit" value="Remove" class="btn btn-warning">
+							</form>
+						{%  else %}
+							<form  action="#" method="post">
+								<input type="hidden" name="action" value="add">
+								<input type="hidden" name="outStream" value="{{ outStream.outStream.publicId }}">
+								<input type="submit" value="Add" class="btn btn-warning">
 							</form>
 						{%  endif %}
 					</td>

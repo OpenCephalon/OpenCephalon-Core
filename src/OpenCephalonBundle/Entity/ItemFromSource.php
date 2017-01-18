@@ -9,19 +9,19 @@ use Doctrine\ORM\Mapping as ORM;
  *  @license 3-clause BSD
  *  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
  * @ORM\Entity()
- * @ORM\Table(name="item_from_source_stream")
+ * @ORM\Table(name="item_from_source")
  * @ORM\HasLifecycleCallbacks
  */
-class ItemFromSourceStream
+class ItemFromSource
 {
 
 
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="OpenCephalonBundle\Entity\SourceStream")
-     * @ORM\JoinColumn(name="source_stream_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="OpenCephalonBundle\Entity\Source")
+     * @ORM\JoinColumn(name="source_id", referencedColumnName="id", nullable=false)
      */
-    private $sourceStream;
+    private $source;
 
     /**
      * @ORM\Id
@@ -37,13 +37,6 @@ class ItemFromSourceStream
      */
     private $createdAt;
 
-
-    /**
-     * @var datetime $publishedAt
-     *
-     * @ORM\Column(name="last_seen_at", type="datetime", nullable=false)
-     */
-    private $lastSeenAt;
 
     /**
      * @param \OpenCephalonBundle\Entity\datetime $createdAt
@@ -78,35 +71,18 @@ class ItemFromSourceStream
     }
 
     /**
-     * @param mixed $sourceStream
-     */
-    public function setSourceStream($sourceStream)
-    {
-        $this->sourceStream = $sourceStream;
-    }
-
-    /**
      * @return mixed
      */
-    public function getSourceStream()
-    {
-        return $this->sourceStream;
+    public function getSource() {
+        return $this->source;
     }
 
     /**
-     * @return datetime
+     * @param mixed $source
      */
-    public function getLastSeenAt() {
-        return $this->lastSeenAt;
+    public function setSource( $source ) {
+        $this->source = $source;
     }
-
-    /**
-     * @param datetime $lastSeenAt
-     */
-    public function setLastSeenAt( $lastSeenAt ) {
-        $this->lastSeenAt = $lastSeenAt;
-    }
-
 
 
     /**
@@ -114,7 +90,6 @@ class ItemFromSourceStream
      */
     public function beforeFirstSave() {
         $this->createdAt = new \DateTime("", new \DateTimeZone("UTC"));
-        $this->lastSeenAt = new \DateTime("", new \DateTimeZone("UTC"));
     }
 
 

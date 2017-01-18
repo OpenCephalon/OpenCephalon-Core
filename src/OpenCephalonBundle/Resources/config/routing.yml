@@ -48,6 +48,10 @@ opencephalon_project_source_new_stream:
     path:     /project/{projectId}/source/{sourceId}/new/stream
     defaults: { _controller: OpenCephalonBundle:ProjectSourceEdit:newStream }
 
+opencephalon_project_source_new_item:
+    path:     /project/{projectId}/source/{sourceId}/new/item
+    defaults: { _controller: OpenCephalonBundle:ProjectSourceEdit:newItem }
+
 opencephalon_project_source_stream_list:
     path:     /project/{projectId}/source/{sourceId}/stream
     defaults: { _controller: OpenCephalonBundle:ProjectSource:streams }

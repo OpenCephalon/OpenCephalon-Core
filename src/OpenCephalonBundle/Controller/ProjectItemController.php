@@ -60,11 +60,20 @@ class ProjectItemController extends Controller
             if ($outStream) {
                if ($request->request->get('action') == 'remove') {
                    $itemRepo->removeItemFromOutStream($this->item, $outStream, $this->getUser());
+                } else if ($request->request->get('action') == 'add') {
+                   $itemRepo->addItemToOutStream($this->item, $outStream, $this->getUser());
                 }
             }
         }
 
         //data
+        $sources = array();
+        foreach($doctrine->getRepository('OpenCephalonBundle:ItemFromSource')->findByItem($this->item) as $itemFromSource) {
+            $sources[] = array(
+                'source' => $itemFromSource->getSource(),
+            );
+        }
+
         $sourceStreams = array();
         foreach($doctrine->getRepository('OpenCephalonBundle:SourceStream')->findByItem($this->item) as $sourceStream) {
             $sourceStreams[] = array(
@@ -87,6 +96,7 @@ class ProjectItemController extends Controller
             'item' => $this->item,
             'sourceStreams' => $sourceStreams,
             'outStreams' => $outstreams,
+            'sources' => $sources,
         ));
     }
 

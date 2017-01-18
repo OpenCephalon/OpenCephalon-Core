@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  *  @license 3-clause BSD
  *  @link https://github.com/OpenCephalon/OpenCephalon-Core/blob/master/LICENSE.txt
  */
-class SourceNewType extends AbstractType {
+class ItemNewType extends AbstractType {
 
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -23,9 +23,14 @@ class SourceNewType extends AbstractType {
             'label'=>'Title'
         ));
 
+        $builder->add('description', 'textarea', array(
+            'required' => true,
+            'label'=>'Description'
+        ));
+
         $builder->add('url', 'url', array(
-            'required' => false,
-            'label'=>'Source Stream URL (Optional)'
+            'required' => true,
+            'label'=>'URL'
         ));
 
     }
@@ -36,6 +41,7 @@ class SourceNewType extends AbstractType {
 
     public function getDefaultOptions(array $options) {
         return array(
+            'data_class' => 'OpenCephalonBundle\Entity\Item',
         );
     }
 }
